@@ -6,11 +6,14 @@ import java.util.List;
 
 public interface QuestionsService {
     //Добавить вопрос
-    String addQuestion(String question, String answer);
+    String addQuestion(Questions question);
 
     //Удаление вопроса
-    String removeQuestion(String question, String answer);
+    String removeQuestion(Questions quest);
 
     //Получить все вопросы
     List<Questions> getAllQuestions();
+
+    //Рандомный вопрос из списка
+    Questions getRandom();
 }

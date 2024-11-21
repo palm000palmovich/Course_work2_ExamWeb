@@ -1,7 +1,9 @@
 package com.project.Exam.Services;
 
+import com.project.Exam.Exceptions.CollectionIsEmptyException;
 import com.project.Exam.Questions;
 import org.springframework.stereotype.Service;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,39 +15,26 @@ public class JavaQuestionsService implements QuestionsService {
 
     //Добавить вопрос
     @Override
-    public String addQuestion(String question, String answer){
-        Questions question1 = new Questions(question, answer);
-
-        if (javaQuestionsList == null){
-            javaQuestionsList = new ArrayList<>();
-        }
-
-        for (int i = 0; i < javaQuestionsList.size(); i++) {
-            if (javaQuestionsList.get(i).getQuestion().equals(question)
-            && javaQuestionsList.get(i).getAnswer().equals(answer)){
+    public String addQuestion(Questions question){
+        for (int i = 0; i < javaQuestionsList.size(); i++){
+            if (javaQuestionsList.get(i).getQuestion().equals(question.getQuestion())
+            && javaQuestionsList.get(i).getAnswer().equals(question.getAnswer())){
                 return "Этот вопрос уже есть в списке!";
             }
         }
-        javaQuestionsList.add(question1);
+        javaQuestionsList.add(question);
         return "Вопрос успешно добавлен!";
-    }
-
-    @Override
-    public String addQuestion(Questions question){
-        for (int i = 0; i < javaQuestionsList.size(); i++){
-            if (javaQuestionsList.get(i).)
-        }
     }
 
     //Удаление вопроса
     @Override
-    public String removeQuestion(String question, String answer){
+    public String removeQuestion(Questions quest){
 
         for (int i = 0; i < javaQuestionsList.size(); i++) {
-            if (javaQuestionsList.get(i).getQuestion().equals(question)
-                    && javaQuestionsList.get(i).getAnswer().equals(answer)){
-                Questions question1 = javaQuestionsList.get(i);
-                javaQuestionsList.remove(question1);
+            if (javaQuestionsList.get(i).getQuestion().equals(quest.getQuestion())
+                    && javaQuestionsList.get(i).getAnswer().equals(quest.getAnswer())){
+                quest = javaQuestionsList.get(i);
+                javaQuestionsList.remove(quest);
                 return "Вопрос успешно удален!";
             }
         }
@@ -57,4 +46,15 @@ public class JavaQuestionsService implements QuestionsService {
     public List<Questions> getAllQuestions(){
         return new ArrayList<>(javaQuestionsList);
     }
+
+    //Рандомный вопрос из списка
+    @Override
+    public Questions getRandom(){
+        if (javaQuestionsList.size() != 0){
+            int randomIndex = (int) (Math.random() * (javaQuestionsList.size()));
+            return javaQuestionsList.get(randomIndex);
+        }
+        throw new CollectionIsEmptyException("Список вопросов пуст!");
+    }
+
 }

@@ -3,10 +3,7 @@ package com.project.Exam.Controllers;
 import com.project.Exam.Questions;
 import com.project.Exam.Services.QuestionsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,21 +11,25 @@ import java.util.List;
 @RequestMapping("/exam/java")
 public class JavaQuestionController {
     @Autowired
-    private QuestionsService questionsService;
+    private QuestionsService queSer;
 
-    @GetMapping(path = "/add")
-    public String addQues(@RequestParam("question") String question,
-                          @RequestParam("answer") String answer){
-        return questionsService.addQuestion(question, answer);
+    //Добавление
+    @PostMapping(path = "/add")
+    public String addQues(@RequestBody Questions question){
+        return queSer.addQuestion(question);
     }
 
-    @GetMapping(path = "/remove")
-    public String removeQue(@RequestParam("question") String question,
-                            @RequestParam("answer") String answer){
-        return questionsService.removeQuestion(question, answer);
+    //Удаление
+    @PostMapping(path = "/remove")
+    public String removeQue(@RequestBody Questions question){
+        return queSer.removeQuestion(question);
     }
 
 
+    //Вывод всех вопросов
     @GetMapping
-    public List<Questions> allQuestions(){return questionsService.getAllQuestions();}
+    public List<Questions> getAll(){
+        return queSer.getAllQuestions();
+    }
+
 }
