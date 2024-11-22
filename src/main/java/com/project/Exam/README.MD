@@ -69,16 +69,17 @@ responsible for its operation.
 so that I can understand the operation of the algorithm 
 based on errors :)**
 
-  _P.S. Love you Java ♡_
+**date 22.11.2024**
+
+I added Unit tests for Services. Now for convenience you can 
+poke into the tests. In test for ExaminerServiceImpl added
+mock for method getRandom() and getAllQuestions().
+
+
+_P.S. Love you Java ♡_
 
 `public class ReplyFromJava {
     public static void main(String[] args) {
         System.out.println("Love you too bro)";
     }
 }`
-
-**date 22.11.2024**
-
-I added Unit tests for Services. Now for convenience you can 
-poke into the tests. In test for ExaminerServiceImpl added
-mock for method getRandom() and getAllQuestions().
