@@ -13,6 +13,12 @@ public class JavaQuestionController {
     @Autowired
     private QuestionsService queSer;
 
+    //Вывод всех вопросов
+    @GetMapping
+    public List<Questions> getAll(){
+        return queSer.getAllQuestions();
+    }
+
     //Добавление
     @PostMapping(path = "/add")
     public String addQues(@RequestBody Questions question){
@@ -25,11 +31,5 @@ public class JavaQuestionController {
         return queSer.removeQuestion(question);
     }
 
-
-    //Вывод всех вопросов
-    @GetMapping
-    public List<Questions> getAll(){
-        return queSer.getAllQuestions();
-    }
 
 }

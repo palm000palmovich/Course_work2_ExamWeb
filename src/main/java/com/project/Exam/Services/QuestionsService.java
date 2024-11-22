@@ -13,7 +13,6 @@ public interface QuestionsService {
 
     //Получить все вопросы
     List<Questions> getAllQuestions();
-
     //Рандомный вопрос из списка
     Questions getRandom();
 }

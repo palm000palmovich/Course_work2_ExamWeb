@@ -12,7 +12,7 @@ import java.util.Set;
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
     @Autowired
-    QuestionsService queSer;  //Здесь мок
+    QuestionsService queSer;
     Set<Questions> setOfRandomQuestions;
 
 
@@ -27,7 +27,7 @@ public class ExaminerServiceImpl implements ExaminerService {
         if (amount <= listOfQues.size()){
             setOfRandomQuestions.clear();
             while (setOfRandomQuestions.size() < amount){
-                setOfRandomQuestions.add(queSer.getRandom());}
+                setOfRandomQuestions.add(queSer.getRandom());} //Здесь мок
             return setOfRandomQuestions;
         }
         throw new BadRequestException("Указанное число больше длины списка!");

@@ -26,6 +26,13 @@ public class JavaQuestionsService implements QuestionsService {
         return "Вопрос успешно добавлен!";
     }
 
+    //Получить все вопросы
+    @Override
+    public List<Questions> getAllQuestions(){
+
+        return new ArrayList<>(javaQuestionsList);
+    }
+
     //Удаление вопроса
     @Override
     public String removeQuestion(Questions quest){
@@ -41,11 +48,6 @@ public class JavaQuestionsService implements QuestionsService {
         return "Такого вопроса в списке нет! Добавим?";
     }
 
-    //Получить все вопросы
-    @Override
-    public List<Questions> getAllQuestions(){
-        return new ArrayList<>(javaQuestionsList);
-    }
 
     //Рандомный вопрос из списка
     @Override
