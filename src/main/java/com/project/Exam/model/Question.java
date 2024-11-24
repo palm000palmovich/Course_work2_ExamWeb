@@ -1,12 +1,12 @@
-package com.project.Exam;
+package com.project.Exam.model;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-public class Questions {
+public class Question {
     private String question;
     private String answer;
-    public Questions(String question, String answer){
+    public Question(String question, String answer){
         this.question = question;
         this.answer = answer;
     }

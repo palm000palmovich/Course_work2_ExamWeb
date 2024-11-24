@@ -1,25 +1,23 @@
 package com.project.Exam.Services;
 
 import com.project.Exam.Exceptions.BadRequestException;
-import com.project.Exam.Questions;
+import com.project.Exam.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
     @Autowired
-    QuestionsService queSer;
-    Set<Questions> setOfRandomQuestions;
+    QuestionService questionService;
+    Set<Question> setOfRandomQuestions;
 
 
     //Возврат рандомных вопросов
     @Override
-    public Set<Questions> getRandomQuestion(int amount){
-        List<Questions> listOfQues = queSer.getAllQuestions(); //Мок для getAllQuestions()
+    public Collection<Question> getRandomQuestion(int amount){
+        List<Question> listOfQues = questionService.getAllQuestions(); //Мок для getAllQuestions()
         if (setOfRandomQuestions == null){
             setOfRandomQuestions = new HashSet<>();
         }
@@ -27,7 +25,7 @@ public class ExaminerServiceImpl implements ExaminerService {
         if (amount <= listOfQues.size()){
             setOfRandomQuestions.clear();
             while (setOfRandomQuestions.size() < amount){
-                setOfRandomQuestions.add(queSer.getRandom());} //Здесь мок
+                setOfRandomQuestions.add(questionService.getRandom());} //Здесь мок
             return setOfRandomQuestions;
         }
         throw new BadRequestException("Указанное число больше длины списка!");

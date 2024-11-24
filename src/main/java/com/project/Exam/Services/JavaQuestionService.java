@@ -1,7 +1,7 @@
 package com.project.Exam.Services;
 
 import com.project.Exam.Exceptions.CollectionIsEmptyException;
-import com.project.Exam.Questions;
+import com.project.Exam.model.Question;
 import org.springframework.stereotype.Service;
 
 
@@ -10,12 +10,13 @@ import java.util.List;
 
 @Service
 
-public class JavaQuestionsService implements QuestionsService {
-    List<Questions> javaQuestionsList = new ArrayList<>();
+public class JavaQuestionService implements QuestionService {
+    List<Question> javaQuestionsList = new ArrayList<>();
 
     //Добавить вопрос
     @Override
-    public String addQuestion(Questions question){
+    public String addQuestion(String question1, String answer1){
+        Question question = new Question(question1, answer1);
         for (int i = 0; i < javaQuestionsList.size(); i++){
             if (javaQuestionsList.get(i).getQuestion().equals(question.getQuestion())
             && javaQuestionsList.get(i).getAnswer().equals(question.getAnswer())){
@@ -28,15 +29,15 @@ public class JavaQuestionsService implements QuestionsService {
 
     //Получить все вопросы
     @Override
-    public List<Questions> getAllQuestions(){
+    public List<Question> getAllQuestions(){
 
         return new ArrayList<>(javaQuestionsList);
     }
 
     //Удаление вопроса
     @Override
-    public String removeQuestion(Questions quest){
-
+    public String removeQuestion(String question1, String answer1){
+        Question quest = new Question(question1, answer1);
         for (int i = 0; i < javaQuestionsList.size(); i++) {
             if (javaQuestionsList.get(i).getQuestion().equals(quest.getQuestion())
                     && javaQuestionsList.get(i).getAnswer().equals(quest.getAnswer())){
@@ -48,15 +49,21 @@ public class JavaQuestionsService implements QuestionsService {
         return "Такого вопроса в списке нет! Добавим?";
     }
 
-
     //Рандомный вопрос из списка
     @Override
-    public Questions getRandom(){
-        if (javaQuestionsList.size() != 0){
-            int randomIndex = (int) (Math.random() * (javaQuestionsList.size()));
-            return javaQuestionsList.get(randomIndex);
+    public Question getRandom(){
+        List<Question> list = getAllQuestions();
+        if (list.size() == 0){
+            throw new CollectionIsEmptyException("Список вопросов пуст!");
         }
-        throw new CollectionIsEmptyException("Список вопросов пуст!");
+        int randomIndex = (int) (Math.random() * (list.size()));
+        return javaQuestionsList.get(randomIndex);
     }
 
+    ////////DANGER///////DANGER/////DANGER////DANGER///////DANGER/////DANGER////DANGER///////DANGER/////DANGER////DANGER
+    //Очищение всего списка вопросов(Только если судно прям реально идет ко дну)
+    public void clearQuestionList(){
+        javaQuestionsList.clear();
+    }
+    ////////DANGER///////DANGER/////DANGER////DANGER///////DANGER/////DANGER////DANGER///////DANGER/////DANGER////DANGER
 }
