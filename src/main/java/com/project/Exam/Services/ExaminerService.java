@@ -1,10 +1,10 @@
 package com.project.Exam.Services;
 
-import com.project.Exam.Questions;
+import com.project.Exam.model.Question;
 
-import java.util.Set;
+import java.util.Collection;
 
 public interface ExaminerService {
     //Возврат рандомных вопросов
-    Set<Questions> getRandomQuestion(int amount);
+    Collection<Question> getRandomQuestion(int amount);
 }

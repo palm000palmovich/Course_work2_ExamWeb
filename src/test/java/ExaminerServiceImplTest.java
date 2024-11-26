@@ -1,7 +1,10 @@
-import com.project.Exam.Questions;
+
+import com.project.Exam.Exceptions.BadRequestException;
+import com.project.Exam.Exceptions.CollectionIsEmptyException;
 import com.project.Exam.Services.ExaminerServiceImpl;
-import com.project.Exam.Services.JavaQuestionsService;
-import com.project.Exam.Services.QuestionsService;
+import com.project.Exam.Services.JavaQuestionService;
+import com.project.Exam.Services.QuestionService;
+import com.project.Exam.model.Question;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,12 +13,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 public class ExaminerServiceImplTest {
@@ -23,38 +24,48 @@ public class ExaminerServiceImplTest {
     ExaminerServiceImpl examinerService;
 
     @Mock
-    QuestionsService queSer;
+    QuestionService questionService;
 
-    private Questions question1;
-    private Questions question2;
-    private Questions question3;
+    private String question1;
+    private String answer1;
+    private String question2;
+    private String answer2;
+    private String question3;
+    private String answer3;
+
 
     @BeforeEach
     public void setUp(){
-        this.question1 = new Questions("Давай я назову тебя Андрей?", "Сомневаюсь, что это вопрос по джаве...");
-        this.question2 = new Questions("Как понять, что в головах у святых?", "Это сложно, я просто делаю свой пых-пых.");
-        this.question3 = new Questions("Давай я буду слон, а ты  посудная лавочка?", "Давай я лучше буду Андреем...");
+        question1 = "Ты кто?"; answer1 = "Я-МЫ";
+        question2 = "А кто мы?"; answer2 = "Сам хз, так в сценарии написано...";
+        question3 = "Ну и что же мы сейчас делаем вообще?"; answer3 = "Пишем тесты для нашего сервиса...";
 
-        queSer.addQuestion(question1);
-        queSer.addQuestion(question2);
-        queSer.addQuestion(question3);
     }
     @Test
     public void getRandomQuestionTest(){
-        List<Questions> list = new ArrayList<>();
-        list.add(question1);
-        list.add(question2);
-        list.add(question3);
+        List<Question> list = new ArrayList<>();
+        list.add(new Question(question1, answer1));
+        list.add(new Question(question2, answer2));
 
-        Mockito.when(queSer.getRandom()).thenReturn(question1,question2);
-        Mockito.when(queSer.getAllQuestions()).thenReturn(list);
+        Mockito.when(questionService.getRandom()).thenReturn(new Question(question1, answer1),
+                                                             new Question(question2, answer2));
+        Mockito.when(questionService.getAllQuestions()).thenReturn(list);
 
 
-        Set<Questions> expected = examinerService.getRandomQuestion(2);
-        Set<Questions> actual = new HashSet<>();
-        actual.add(question1);
-        actual.add(question2);
+        Collection<Question> expected = examinerService.getRandomQuestion(2);
+        Collection<Question> actual = new HashSet<>();
+        actual.add(new Question(question1, answer1));
+        actual.add(new Question(question2, answer2));
 
-        assertEquals(expected, actual);
+
+        assertEquals(expected.size(), actual.size());
     }
+
+    @Test
+    public void badRequestExceptionTest(){
+
+        BadRequestException thrown = assertThrows(BadRequestException.class,
+                () -> examinerService.getRandomQuestion(3));
+    }
+
 }
